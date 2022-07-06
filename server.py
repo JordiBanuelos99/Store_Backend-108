@@ -1,4 +1,7 @@
 from flask import Flask
+from about import me
+from data import mock_data
+import json
 
 app = Flask('server')
 
@@ -22,8 +25,19 @@ def version():
     return "1.0"
 
 @app.get("/api/about")
-def about(me):
-    return me["first"] + " " + me["last"]
+def about_json():
+    return json.dumps(me)
+
+@app.get("/api/products")
+def products_json():
+    return json.dumps(mock_data)
+
+@app.get("/api/products/<id>")
+def get_product_by_id(id):
+    for product in mock_data:
+        if str(product["id"]) == id:
+            return json.dumps(product)
+    return "Not found"
 
 
 app.run(debug=True)
