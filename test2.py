@@ -104,7 +104,17 @@ def test2():
         if user["color"] == "pink":
             print(user["name"])
 
-
-start_tests()
-test1()
-test2()
+def test3():
+    print("------ Test 3 ------")
+    prices = [123, 3, 23, 6475, 58, 89, 45, 34, 87, 34, -12, 23, 123, -23, -123, 0, 123, 0, -29, 10]
+    solution = prices [0]
+    for number in prices:
+        if number > solution:
+            solution = number
+    print("The highest price found in this list is: " + str(solution))
+    # Find the most expensive product
+    
+# start_tests()
+# test1()
+# test2()
+test3()

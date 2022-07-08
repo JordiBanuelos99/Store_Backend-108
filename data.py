@@ -43,7 +43,7 @@ mock_data = [
         "title": "Avocado",
         "image": "Avocados_from_Mexico.jpg",
         "discount": 0,
-        "category": "Fruit?"
+        "category": "Fruit"
     },
     {
         "id": 6,
