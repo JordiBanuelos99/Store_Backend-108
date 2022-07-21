@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 from about import me
 from data import mock_data
+import random
 import json
 
 app = Flask('server')
@@ -17,7 +18,6 @@ def test():
 def about():
     return "Jordi Bañuelos"
 
-
 ############## API ENDPOINTS = PRODUCTS ################
 
 @app.get("/api/version")
@@ -31,6 +31,20 @@ def about_json():
 @app.get("/api/products")
 def products_json():
     return json.dumps(mock_data)
+
+@app.post("/api/products")
+def save_product():
+    product = request.get_json()
+    
+    # add product to the mock_data
+    mock_data.append(product)
+    
+    # assign an id to the product
+    rnumber=0
+    product["id"] = random.randint()
+    
+    # return the product as json
+    return json.dumps(product)
 
 @app.get("/api/products/<id>")
 def get_product_by_id(id):
@@ -46,6 +60,24 @@ def category_list():
         if not item["category"] in categories:
             categories.append(item["category"])
     return json.dumps(categories)
+
+# get return the number of prods in the catalog
+# api/count_products
+@app.get("/api/count_products")
+def get_products_count():
+    count = len(mock_data)
+    return json.dumps({"count": count})
+
+# get api/search/<text>
+# return all prods whose title contains text
+@app.get("/api/search/<text>")
+def search_products(text):
+    results= []
+    # do the magic here
+    for prod in mock_data:
+        if text in prod["title"].lower():
+            results.append(prod)
+    return json.dumps(results)
 
 # GET Category/products_category/<category>
 # Return all products who's category is the one at the top
