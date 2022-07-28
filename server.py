@@ -5,8 +5,10 @@ import random
 import json
 from config import db
 from bson import ObjectId
+from flask_cors import CORS;
 
 app = Flask('server')
+CORS(app) # allow request from any origin
 
 @app.get("/")
 def home():
